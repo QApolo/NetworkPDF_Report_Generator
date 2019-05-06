@@ -13,7 +13,7 @@ import time
 class IMAPclient(imaplib.IMAP4):
     """IMAP client  to send messages
     Note:
-        This extends from imaplib.SMTP
+        This extends from imaplib.IMAP4
     :param host (str): the name of the remote host to which to connect.
     :param port (str): the port to which to connect
     """
