@@ -25,7 +25,6 @@ def main(argv):
         print('usage MAILmonitor_test.py -option <args>*', "-s <")
         sys.exit(2)
     for opt, arg in opts:
-        print(f"opt {opt} arg {arg}")
         if opt == '-h':
             print('usage MAILmonitor_test.py -option <args>*')
             sys.exit()
