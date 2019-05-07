@@ -32,14 +32,13 @@ class IMAPclient(imaplib.IMAP4):
             self.login(user, passw)
             self.select('Inbox')
             s_t = time.time()
-            tmp, data = self.search(None, criteria)
+            rv, data = self.search(None, criteria)
             f_t = time.time() - s_t
             print(f"Successfully fetch email {f_t}s taken")
             for num in data[0].split():
-                tmp, data = self.fetch(num, '(RFC822)')
-                print('Message: {0}\n'.format(num))
-                pprint.pprint(data[0][1])
-                break
+                subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
+                body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
+                print(f"{subj}\n {body}")
             self.close()
         except imaplib.IMAP4.error as error:
             print(f"Error: unable to fetch email\nlog: {error}")

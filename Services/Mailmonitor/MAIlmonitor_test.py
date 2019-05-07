@@ -32,7 +32,6 @@ def main(argv):
             test_send(args[0], args[1], args[2])
         elif opt in ("-r", "--ofile"):
             test_receive(args[0], args[1])
-            pass
         elif opt in ("-m", "--ofile"):
             outputfile = arg
 
