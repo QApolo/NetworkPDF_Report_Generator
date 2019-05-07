@@ -12,9 +12,9 @@ def test_send(sender, receiver, message):
     server.sendmail(sender, receiver, message)
     server.close()
 
-def test_receive(user,passw):
+def test_receive(user,passw,criteria):
     server = IMAPclient("localhost")
-    server.fetch_mail(user, passw)
+    server.fetch_mail(user, passw,criteria)
 
 def main(argv):
     inputfile = ''
@@ -31,7 +31,7 @@ def main(argv):
         elif opt in ("-s", "--ifile"):
             test_send(args[0], args[1], args[2])
         elif opt in ("-r", "--ofile"):
-            test_receive(args[0], args[1])
+            test_receive(args[0], args[1],"ALL" if len(args) > 2 else args[2])
         elif opt in ("-m", "--ofile"):
             outputfile = arg
 
