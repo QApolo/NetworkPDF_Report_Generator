@@ -21,8 +21,6 @@ def main(argv):
     outputfile = ''
     try:
         opts, args = getopt.getopt(argv, "hsrm:")
-        print(opts)
-        print(args)
     except getopt.GetoptError:
         print('usage MAILmonitor_test.py -option <args>*', "-s <")
         sys.exit(2)
@@ -38,8 +36,6 @@ def main(argv):
             pass
         elif opt in ("-m", "--ofile"):
             outputfile = arg
-    print('Input file is "', inputfile)
-    print('Output file is "', outputfile)
 
 
 if __name__ == '__main__':
