@@ -36,7 +36,7 @@ class IMAPclient(imaplib.IMAP4):
             f_t = time.time() - s_t
             print(f"Successfully fetch email {f_t}s taken")
             for num in data[0].split():
-                subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
+                #subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
                 print(f"{subj}\n {body}")
             self.close()
