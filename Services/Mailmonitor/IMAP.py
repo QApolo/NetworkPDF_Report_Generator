@@ -38,7 +38,7 @@ class IMAPclient(imaplib.IMAP4):
             for num in data[0].split():
                 #subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
-                print(f"{subj}\n {body}")
+                print(f"{body}")
             self.close()
         except imaplib.IMAP4.error as error:
             print(f"Error: unable to fetch email\nlog: {error}")
