@@ -1,9 +1,9 @@
 import json
+from datetime import date
 from fpdf import FPDF
 
 class PdfReport(FPDF):
 	def __init__(self, filepath):
-		self.position = 10
 		FPDF.__init__(self)
 		self.add_page()
 		self.set_font('Arial', 'B', 16)
@@ -14,6 +14,7 @@ class PdfReport(FPDF):
 	def createReport(self):
 		self.output(self.filepath, 'F')
 	def generateCover(self, datacover):
+		datacover['date'] = str(date.today())
 		self.set_font('Arial', '', 12)
 		for k, v in datacover.items():
 			if str(k) == 'names':
@@ -33,24 +34,31 @@ class PdfReport(FPDF):
 				self.ln()
 		self.add_page()
 	def generateConclusions(self):
-		print("conclusions")
-	def newposition(self):
-		self.position += 20
-		return self.position 
+		print("conclusions") 
 	def addInformationServer(self, dataInformation):
-		self.multi_cell(0, 5, str(dataInformation))
+		self.set_font('Arial', 'B', 16)
+		self.multi_cell(0, 5, "Informacion ", align = 'C')
+		self.set_font('Arial', '', 12)
+		for k, v in dataInformation.items():
+			suffix = ""
+			if k == "speed_download":
+				suffix = "bits / sec"
+
+			self.multi_cell(0, 5, "%s : %s %s" %(k, v, suffix))
 		self.ln()
 		
 if __name__ == "__main__":
-	pdf = PdfReport("./output.pdf")
+	pdf = PdfReport("./Reporte.pdf")
 	with open('cover.json') as json_file:  
 	    coverdata = json.load(json_file)
 	pdf.generateCover(coverdata['coverdata'])
-
-	with open("../Information/information.json") as json_file:
+	
+	#for name in files:
+	#with open("../Information/information.json") as json_file:
+	with open("../../Rendimiento/information.json") as json_file:
 		infodata = json.load(json_file)	
 	pdf.addInformationServer(infodata)
-
+	
 	pdf.createReport()
 
 
