@@ -21,6 +21,7 @@ def test_receive(user, passw, criteria):
 
 
 def monitor_service(number_of_messages, sender, receiver, receiverpass, host):
+    print(f"{number_of_messages} {sender} {receiver} {receiverpass} {host}")
     smtp_server = SMTPclient("localhost")
     imap_server = IMAPclient("localhost")
     imap_server.login(receiver, receiverpass)
