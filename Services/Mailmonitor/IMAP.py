@@ -30,7 +30,7 @@ class IMAPclient(imaplib.IMAP4):
             self.select('Inbox')
             s_t = time.time()
             rv, data = self.search(None, criteria)
-            for num in data[0].split()[-1]:
+            for num in data[0].split()[-2:-1]:
                 #subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
                 f_t = time.time() - s_t
