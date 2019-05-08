@@ -3,7 +3,7 @@ this module tests over mailmonitor utils
 """
 import sys, getopt
 import threading
-
+from tqdm import tqdm
 from Services.Mailmonitor.IMAP import IMAPclient
 from Services.Mailmonitor.SMTP import SMTPclient
 
@@ -21,19 +21,18 @@ def test_receive(user, passw, criteria):
     server.close()
 
 
-def monitor_service(number_of_messages, sender, receiver, receiverpass):
+def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria="LAST"):
     print(f"{number_of_messages} {sender} {receiver} {receiverpass}")
+    times_smtp = {}
+    times_imap = {}
     smtp_server = SMTPclient("localhost")
     imap_server = IMAPclient("localhost")
     imap_server.login(receiver, receiverpass)
-    times_smtp = {}
-    times_imap = {}
     message_available = threading.Event()
-    criteria = "LAST"
-    for i in range(number_of_messages):
+    for i in tqdm(range(number_of_messages)):
         times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available)
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail(criteria)
+        times_imap[i] = imap_server.fetch_mail(criteria, True)
     smtp_server.close()
     imap_server.close()
     return times_smtp, times_imap
