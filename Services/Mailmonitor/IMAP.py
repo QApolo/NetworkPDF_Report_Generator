@@ -38,6 +38,7 @@ class IMAPclient(imaplib.IMAP4):
                 print(f"{num}\n{body}")
                 print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
                 if delete:
+                    print(f"deleting")
                     self.uid('STORE', num, '+FLAGS', '(\\Deleted)')
                     self.expunge()
             else:
