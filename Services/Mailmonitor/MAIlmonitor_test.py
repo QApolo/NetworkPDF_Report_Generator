@@ -29,10 +29,12 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, host):
     times_smtp = {}
     times_imap = {}
     message_available = threading.Event()
+    read_available = threading.Event()
     for i in range(number_of_messages):
         times_smtp[i] = smtp_server.sendmail(sender + "@" + host, receiver, "test", message_available)
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail("UNSEEN")
+        times_imap[i] = imap_server.fetch_mail("UNSEEN", read_available)
+        read_available.wait()
     smtp_server.close()
     imap_server.close()
     return times_smtp, times_imap
@@ -58,7 +60,7 @@ def main(argv):
         elif opt in ("-r", "--ofile"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
         elif opt in ("-m", "--ofile"):
-            print("times:\n",monitor_service(int(arg), args[0], args[1], args[2], args[3]))
+            print("times:\n", monitor_service(int(arg), args[0], args[1], args[2], args[3]))
 
 
 if __name__ == '__main__':
