@@ -1,26 +1,27 @@
 # NetworkPDF Report Generator
-
+___
 ## Mail Monitor module
 
-[PyPDF](https://pyfpdf.readthedocs.io/en/latest/Tutorial/index.html)
+--versionlog:
+ --version 1 criscastro 🧐
+___
 
-### Instalación
-Descargar archivos fuentes y ejecutar:
+### Usage
+- Sending and Email:
 ```bash
- python setup.py install
+python MAILmonitor_test.py -s <sender> <receiver> <message>
 ```
+- Check Email Inbox:
 
-### Protocolos
-1. Acceso
-1. Archivos
-1. DNS
-1. Información
-	* Protocolo HTTP
-1. Correo
-
-### Diagrama de clases
-* pendiente
-
-### Notas
-* Crear módulos de cada protocolo a analizar y estandarizar la salida (Acordar mejor opción)
-para iterar sobre la misma para ayudar en la realización dinámica del reporte
+note: (optional) criteria could be use to filter the email fetching
+```bash
+python MAILmonitor_test.py -r <user> <password> <criteria>
+```
+- Generate a N number of samples and monitoring their delivery times
+```bash
+python MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <logfile>
+```
+- Plot a log file of delivery times
+```bash
+python MAILmonitor_test.py -p <datafile.json> <outputfile>
+```
