@@ -31,7 +31,8 @@ class IMAPclient(imaplib.IMAP4):
             if criteria=="LAST":
                 s_t = time.time()
                 rv, data = self.search(None, "ALL")
-                body = self.fetch(data[0].split()[-1], "(UID BODY[TEXT])")[1][0][1]
+                num=data[0].split()[-1]
+                body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
                 f_t = time.time() - s_t
                 print(f"{num}\n{body}")
                 print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
