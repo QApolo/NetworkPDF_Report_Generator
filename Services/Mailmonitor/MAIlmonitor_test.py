@@ -29,10 +29,11 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass):
     times_smtp = {}
     times_imap = {}
     message_available = threading.Event()
+    criteria = "LAST"
     for i in range(number_of_messages):
         times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available)
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail()
+        times_imap[i] = imap_server.fetch_mail(criteria)
     smtp_server.close()
     imap_server.close()
     return times_smtp, times_imap
