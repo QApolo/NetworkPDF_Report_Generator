@@ -72,12 +72,12 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
     return {"smtp_times": times_smtp, "imap_times": times_imap, "test_time":f_t}
 
 
-def plot(stmptimes, imaptimes,total_time, name):
+def plot(stmptimes, imaptimes,total_test_time, name):
     total_time = sum([stmptimes, imaptimes], axis=0)
     plt.plot(stmptimes, label='SMTP time')  # plotting by columns
     plt.plot(imaptimes, label='IMAP time')
-    plt.plot(total_time, label='Total Mail time')
-    plt.title(f"Mail Service Times Total Time: {total_time}s")
+    plt.plot(total_time, label=f'Total Mail time {total_test_time}s')
+    plt.title(f"Mail Service Times")
     plt.xlabel('Number of iteration')
     plt.ylabel('Time in s')
     plt.legend(loc='upper right')
