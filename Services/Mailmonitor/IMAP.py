@@ -35,7 +35,7 @@ class IMAPclient(imaplib.IMAP4):
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
                 f_t = time.time() - s_t
                 print(f"{num}\n{body}")
-            print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
+                print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
         except imaplib.IMAP4.error as error:
             print(f"Error: unable to fetch email\nlog: {error}")
         return f_t
