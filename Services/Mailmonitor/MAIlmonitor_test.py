@@ -5,8 +5,10 @@ import getopt
 import json
 import sys
 import threading
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from tqdm import tqdm
 
 from Services.Mailmonitor.IMAP import IMAPclient
@@ -44,7 +46,6 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
 
 
 def plot(stmptimes, imaptimes, name):
-    plt.ioff()
     plt.plot(stmptimes, label='SMTP time')  # plotting by columns
     plt.plot(imaptimes, label='IMAP time')
     plt.title("Mail Service Times")
