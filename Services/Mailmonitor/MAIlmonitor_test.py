@@ -90,15 +90,15 @@ def main(argv):
     for opt, arg in opts:
         if opt == '-h':
             print("USAGE:"
-                  "\nMAILmonitor_test.py -option <args>*"
-                  "\nCheck Mail:"
-                  "\nMAILmonitor_test.py -r <user> <password> <criteria>"
-                  "\nSend Mail:"
-                  "\nMAILmonitor_test.py -s <sender> <receiver> <message>"
-                  "\nGenerate N number of samples and monitor their delivery times:"
-                  "\nMAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <logfile>"
-                  "\nPlot delivery times stored in a json file"
-                  "\nMAILmonitor_test.py -p <datafile.json> <outputfile>")
+                  "\n- MAILmonitor_test.py -option <args>*"
+                  "\n\nCheck Mail:"
+                  "\n\n- MAILmonitor_test.py -r <user> <password> <criteria>"
+                  "\n\nSend Mail:"
+                  "\n- MAILmonitor_test.py -s <sender> <receiver> <message>"
+                  "\n\nGenerate N number of samples and monitor their delivery times:"
+                  "\n- MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <logfile>"
+                  "\n\nPlot delivery times stored in a json file"
+                  "\n- MAILmonitor_test.py -p <datafile.json> <outputfile>")
             sys.exit()
         elif opt in ("-s", "--send"):
             test_send(args[0], args[1], args[2])
