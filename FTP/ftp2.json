@@ -1,0 +1,13 @@
+{
+	"ftp_esfuerzo": {
+		  "IP": "127.0.0.0.1" ,
+		  "Puerto": "1026" ,
+		  "status":"connect",
+		  "accion": "descargar_archivo",
+		  "ruta":"/home/rublend/Escritorio/ftp/ftp",
+		  "peticiones":10000,
+		  "tiempo_transcurrido":1.2847,
+		  "bytes":25,
+		  "file_count":1
+		  }
+}
