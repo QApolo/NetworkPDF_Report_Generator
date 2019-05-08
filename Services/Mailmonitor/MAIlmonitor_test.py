@@ -115,6 +115,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    # server = SMTPclient("localhost")
-    # server.sendmail("elcris@losanciosos.com", "elkai@losanciosos.com","correo de pruevba python")
     main(sys.argv[1:])
