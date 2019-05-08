@@ -105,7 +105,7 @@ def main(argv):
         elif opt in ("-r", "--receive"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
         elif opt in ("-p", "---plot"):
-            with open(args[0], 'r') as fp:
+            with open(f"{args[0]}.json", 'r') as fp:
                 dict = json.load(fp)
                 plot(dict["smtp_times"], dict["imap_times"], args[1])
                 print(f"Plot has been saved as {args[1]}.png")
