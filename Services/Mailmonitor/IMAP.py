@@ -20,7 +20,7 @@ class IMAPclient(imaplib.IMAP4):
     def __init__(self, host, port=143):
         super().__init__(host, port)
 
-    def fetch_mail(self, criteria="ALL", event=None):
+    def fetch_mail(self, criteria="ALL"):
         """
             :param criteria: a search criteria to lookup.
             :return: time of delivery in seconds it returns -1 if an error has raised
@@ -38,6 +38,4 @@ class IMAPclient(imaplib.IMAP4):
                 print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
         except imaplib.IMAP4.error as error:
             print(f"Error: unable to fetch email\nlog: {error}")
-        if event:
-            event.set()
         return f_t
