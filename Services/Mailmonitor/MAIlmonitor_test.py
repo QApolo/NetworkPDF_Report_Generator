@@ -59,7 +59,7 @@ def main(argv):
         elif opt in ("-r", "--receive"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
         elif opt in ("-m", "--monitor"):
-            with open('mydict.json', 'wb') as fp:
+            with open('mydict.json', 'w') as fp:
                 json.dump(monitor_service(int(arg), args[0], args[1], args[2]), fp)
 
 
