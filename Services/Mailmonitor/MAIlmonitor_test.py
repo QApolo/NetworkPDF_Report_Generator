@@ -44,11 +44,12 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
 
 
 def plot(stmptimes, imaptimes, name):
+    plt.ioff()
     plt.plot(stmptimes, label='SMTP time')  # plotting by columns
     plt.plot(imaptimes, label='IMAP time')
     plt.title("Mail Service Times")
-    plt.xlabel('Time in s')
-    plt.ylabel('Number of iteration')
+    plt.xlabel('Number of iteration')
+    plt.ylabel('Time in s')
     plt.legend(loc='upper right')
     plt.savefig(f'{name}.png')
 
