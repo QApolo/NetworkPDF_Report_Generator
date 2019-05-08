@@ -8,7 +8,7 @@ ___
 ___
 
 ### Usage
-- Sending and Email:
+- Send an Email:
 ```bash
 python MAILmonitor_test.py -s <sender> <receiver> <message>
 ```
