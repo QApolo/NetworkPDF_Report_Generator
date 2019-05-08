@@ -1,10 +1,14 @@
 """
 this module tests over mailmonitor utils
 """
-import sys, getopt
+import getopt
 import json
+import sys
 import threading
+
+import matplotlib.pyplot as plt
 from tqdm import tqdm
+
 from Services.Mailmonitor.IMAP import IMAPclient
 from Services.Mailmonitor.SMTP import SMTPclient
 
@@ -39,6 +43,16 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
     return {"smtp_times": times_smtp, "imap_times": times_imap}
 
 
+def plot(stmptimes, imaptimes, name):
+    plt.plot(stmptimes, label='SMTP time')  # plotting by columns
+    plt.plot(imaptimes, label='IMAP time')
+    plt.title("Mail Service Times")
+    plt.xlabel('Time in s')
+    plt.ylabel('Number of iteration')
+    plt.legend(loc='upper right')
+    plt.savefig(f'{name}.png')
+
+
 def main(argv):
     inputfile = ''
     outputfile = ''
@@ -52,12 +66,18 @@ def main(argv):
             print('usage MAILmonitor_test.py -option <args>*')
             print('usage MAILmonitor_test.py -r <user> <password> <criteria>')
             print('usage MAILmonitor_test.py -s <sender> <receiver> <message>')
-            print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <host>')
+            print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> ')
+            print('usage MAILmonitor_test.py -p <datafile.json> <outputfile>')
             sys.exit()
         elif opt in ("-s", "--send"):
             test_send(args[0], args[1], args[2])
         elif opt in ("-r", "--receive"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
+        elif opt in ("-p", "---plot"):
+            with open(args[0], 'r') as fp:
+                dict = json.load(fp)
+                plot(dict["smtp_times"], dict["imap_times"], args[1])
+                print(f"Plot has been saved as {args[1]}.png")
         elif opt in ("-m", "--monitor"):
             with open('mydict.json', 'w') as fp:
                 json.dump(monitor_service(int(arg), args[0], args[1], args[2]), fp)
