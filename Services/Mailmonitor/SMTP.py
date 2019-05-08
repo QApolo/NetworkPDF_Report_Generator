@@ -19,7 +19,7 @@ class SMTPclient(smtplib.SMTP):
     def __init__(self, host, port=''):
         super().__init__(host, port)
 
-    def sendmail(self, sender, receivers, message,event=None):
+    def sendmail(self, sender, receivers, message,event=None,verbose=True):
         """
         :param sender: The address sending this mail.
         :param receivers: A list of addresses to send this mail to.
@@ -31,7 +31,8 @@ class SMTPclient(smtplib.SMTP):
             s_t = time.time()
             super().sendmail(sender, receivers, message)
             f_t = time.time() - s_t
-            print(f"Successfully sent email {f_t}s taken")
+            if verbose:
+                print(f"Successfully sent email {f_t}s taken")
         except smtplib.SMTPException as error:
             print(f"Error: unable to send email\nlog: {error}")
         if event:

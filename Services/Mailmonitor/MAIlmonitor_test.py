@@ -30,9 +30,9 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
     imap_server.login(receiver, receiverpass)
     message_available = threading.Event()
     for i in tqdm(range(number_of_messages)):
-        times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available)
+        times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available, verbose=False)
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail(criteria, True)
+        times_imap[i] = imap_server.fetch_mail(criteria, delete=True)
     smtp_server.close()
     imap_server.close()
     return times_smtp, times_imap
