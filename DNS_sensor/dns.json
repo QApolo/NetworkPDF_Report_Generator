@@ -1,0 +1,1 @@
+{"domain": "www.google.com", "dns_lookuptype": "A", "compused": "(b'www', b'google', b'com', b'')", "descrition": "id 601 - opcode QUERY - rcode NOERROR - flags QR RD RA - ;QUESTION - www.google.com. IN A - ;ANSWER - www.google.com. 266 IN A 172.217.5.164 - ;AUTHORITY - ;ADDITIONAL", "state": "Up", "server_response_time": "2.1292169094085693"}
