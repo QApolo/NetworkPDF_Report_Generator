@@ -32,7 +32,7 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass):
     for i in range(number_of_messages):
         times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available)
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail("UNSEEN")
+        times_imap[i] = imap_server.fetch_mail()
     smtp_server.close()
     imap_server.close()
     return times_smtp, times_imap
