@@ -30,7 +30,7 @@ class IMAPclient(imaplib.IMAP4):
             self.select('Inbox')
             if criteria=="LAST":
                 s_t = time.time()
-                rv, data = self.search(None, criteria)
+                rv, data = self.search(None, "ALL")
                 body = self.fetch(data[-1], "(UID BODY[TEXT])")[1][0][1]
                 f_t = time.time() - s_t
                 print(f"{num}\n{body}")
