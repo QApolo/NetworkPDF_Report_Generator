@@ -50,7 +50,7 @@ def main(argv):
         elif opt in ("-r", "--ofile"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
         elif opt in ("-m", "--ofile"):
-            monitor_service(arg, args[0], args[1], args[2], int(args[3]))
+            monitor_service(int(arg), args[0], args[1], args[2], args[3])
 
 
 if __name__ == '__main__':
