@@ -36,7 +36,6 @@ class IMAPclient(imaplib.IMAP4):
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
                 f_t = time.time() - s_t
                 if delete:
-                    print(f"deleting")
                     self.store(num, '+FLAGS', '\\Deleted')
                     self.expunge()
                 else:
