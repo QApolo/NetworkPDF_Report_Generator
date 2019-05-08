@@ -17,7 +17,7 @@ def test_send(sender, receiver, message):
 def test_receive(user, passw, criteria):
     server = IMAPclient("localhost")
     server.login(user, passw)
-    server.fetch_mail(user, passw, criteria)
+    server.fetch_mail( criteria)
     server.close()
 
 
