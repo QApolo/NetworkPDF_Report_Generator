@@ -8,6 +8,7 @@ import threading
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from numpy import sum
 
 from tqdm import tqdm
 
@@ -46,8 +47,10 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
 
 
 def plot(stmptimes, imaptimes, name):
+    total_time = sum([stmptimes, imaptimes], axis=0)
     plt.plot(stmptimes, label='SMTP time')  # plotting by columns
     plt.plot(imaptimes, label='IMAP time')
+    plt.plot(total_time, label='Total Mail time')
     plt.title("Mail Service Times")
     plt.xlabel('Number of iteration')
     plt.ylabel('Time in s')
