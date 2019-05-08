@@ -3,7 +3,7 @@ Análisis de tráfico de los distintos protocolos y generación de reporte.
 
 ## Modulos utilizados
 
-[PyPDF](https://pyfpdf.readthedocs.io/en/latest/Tutorial/index.html)
+[PyFPDF](https://pyfpdf.readthedocs.io/en/latest/Tutorial/index.html)
 
 ### Instalación
 Descargar archivos fuentes y ejecutar:
