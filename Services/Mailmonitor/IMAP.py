@@ -20,16 +20,13 @@ class IMAPclient(imaplib.IMAP4):
     def __init__(self, host, port=143):
         super().__init__(host, port)
 
-    def fetch_mail(self, user, passw, criteria="ALL"):
+    def fetch_mail(self, criteria="ALL"):
         """
-            :param user: The email address to lookup.
-            :param passw: the password of the user email.
             :param criteria: a search criteria to lookup.
             :return: time of delivery in seconds it returns -1 if an error has raised
         """
         f_t = -1
         try:
-            self.login(user, passw)
             self.select('Inbox')
             s_t = time.time()
             rv, data = self.search(None, criteria)

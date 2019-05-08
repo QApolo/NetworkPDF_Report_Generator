@@ -15,6 +15,7 @@ def test_send(sender, receiver, message):
 
 def test_receive(user, passw, criteria):
     server = IMAPclient("localhost")
+    server.login(user, passw)
     server.fetch_mail(user, passw, criteria)
     server.close()
 
@@ -22,11 +23,14 @@ def test_receive(user, passw, criteria):
 def monitor_service(number_of_messages, sender, receiver, receiverpass, host):
     smtp_server = SMTPclient("localhost")
     imap_server = IMAPclient("localhost")
+    imap_server.login(receiver, receiverpass)
     times_smtp = {}
     times_imap = {}
     for i in range(number_of_messages):
         times_smtp[i] = smtp_server.sendmail(sender + "@" + host, receiver, f"test: {i}")
-        times_imap[i] = imap_server.fetch_mail(receiver, receiverpass, "UNSEEN")
+        times_imap[i] = imap_server.fetch_mail("UNSEEN")
+    smtp_server.close()
+    imap_server.close()
     return times_smtp, times_imap
 
 
