@@ -28,6 +28,7 @@ import json
 import sys
 import threading
 import matplotlib
+import time
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from numpy import sum
@@ -52,6 +53,7 @@ def test_receive(user, passw, criteria):
 
 
 def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria="LAST"):
+    s_t = time.time()
     print(f"Generating  {number_of_messages} samples.")
     times_smtp = []
     times_imap = []
@@ -65,15 +67,16 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
         times_imap.append(imap_server.fetch_mail(criteria, delete=True))
     smtp_server.close()
     imap_server.close()
-    return {"smtp_times": times_smtp, "imap_times": times_imap}
+    f_t = time.time() - s_t
+    return {"smtp_times": times_smtp, "imap_times": times_imap,"test_time":f_t}
 
 
-def plot(stmptimes, imaptimes, name):
+def plot(stmptimes, imaptimes,total_time, name):
     total_time = sum([stmptimes, imaptimes], axis=0)
     plt.plot(stmptimes, label='SMTP time')  # plotting by columns
     plt.plot(imaptimes, label='IMAP time')
     plt.plot(total_time, label='Total Mail time')
-    plt.title("Mail Service Times")
+    plt.title(f"Mail Service Times Total Time: {total_time}s")
     plt.xlabel('Number of iteration')
     plt.ylabel('Time in s')
     plt.legend(loc='upper right')
@@ -107,7 +110,7 @@ def main(argv):
         elif opt in ("-p", "---plot"):
             with open(args[0], 'r') as fp:
                 dict = json.load(fp)
-                plot(dict["smtp_times"], dict["imap_times"], args[1])
+                plot(dict["smtp_times"], dict["imap_times"],dict["test_time"], args[1])
                 print(f"Plot has been saved as {args[1]}.png")
         elif opt in ("-m", "--monitor"):
             with open(f"{args[3]}.json", 'w') as fp:
