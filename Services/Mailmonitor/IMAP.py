@@ -33,13 +33,12 @@ class IMAPclient(imaplib.IMAP4):
             self.select('Inbox')
             s_t = time.time()
             rv, data = self.search(None, criteria)
-            f_t = time.time() - s_t
-            print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t//1000 <1 else f"{f_t:.4s}s", " taken")
             for num in data[0].split():
                 #subj = self.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
                 body = self.fetch(num, "(UID BODY[TEXT])")[1][0][1]
+                f_t = time.time() - s_t
                 print(f"{num}\n{body}")
-            self.close()
+                print(f"Successfully fetch email ", f"{f_t*1000:.4}ms" if f_t // 1000 < 1 else f"{f_t:.4s}s", " taken")
         except imaplib.IMAP4.error as error:
             print(f"Error: unable to fetch email\nlog: {error}")
         return f_t

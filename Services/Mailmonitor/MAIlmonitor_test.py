@@ -15,6 +15,17 @@ def test_send(sender, receiver, message):
 def test_receive(user,passw,criteria):
     server = IMAPclient("localhost")
     server.fetch_mail(user, passw,criteria)
+    server.close()
+
+def monitor_service(number_of_messages,sender,receiver,receiverpass,host):
+    smtp_server = SMTPclient("localhost")
+    imap_server = IMAPclient("localhost")
+    times_smtp = {}
+    times_imap = {}
+    for i in range(number_of_messages):
+        times_smtp[i] = smtp_server.sendmail(sender+"@"+host, receiver, f"test: {i}")
+        times_imap[i] = imap_server.fetch_mail(receiver, receiverpass, "UNSEEN")
+    return times_smtp, times_imap
 
 def main(argv):
     inputfile = ''
@@ -27,13 +38,17 @@ def main(argv):
     for opt, arg in opts:
         if opt == '-h':
             print('usage MAILmonitor_test.py -option <args>*')
+            print('usage MAILmonitor_test.py -r <user> <password> <criteria>')
+            print('usage MAILmonitor_test.py -s <sender> <receiver> <message>')
+            print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <host>')
             sys.exit()
         elif opt in ("-s", "--ifile"):
             test_send(args[0], args[1], args[2])
         elif opt in ("-r", "--ofile"):
             test_receive(args[0], args[1],"ALL" if len(args) == 2 else args[2])
         elif opt in ("-m", "--ofile"):
-            outputfile = arg
+            monitor_service(arg, args[0], args[1], args[2], args[3])
+
 
 
 if __name__ == '__main__':
