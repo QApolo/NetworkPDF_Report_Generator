@@ -57,7 +57,7 @@ def main(argv):
     inputfile = ''
     outputfile = ''
     try:
-        opts, args = getopt.getopt(argv, "hsrm:")
+        opts, args = getopt.getopt(argv, "hsrmp:")
     except getopt.GetoptError:
         print('usage MAILmonitor_test.py -option <args>*', "-s <")
         sys.exit(2)
