@@ -68,7 +68,8 @@ def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria
     smtp_server.close()
     imap_server.close()
     f_t = time.time() - s_t
-    return {"smtp_times": times_smtp, "imap_times": times_imap,"test_time":f_t}
+    print(f"total time {f_t}")
+    return {"smtp_times": times_smtp, "imap_times": times_imap, "test_time":f_t}
 
 
 def plot(stmptimes, imaptimes,total_time, name):
@@ -110,7 +111,7 @@ def main(argv):
         elif opt in ("-p", "---plot"):
             with open(args[0], 'r') as fp:
                 dict = json.load(fp)
-                plot(dict["smtp_times"], dict["imap_times"],dict["test_time"], args[1])
+                plot(dict["smtp_times"], dict["imap_times"], dict["test_time"], args[1])
                 print(f"Plot has been saved as {args[1]}.png")
         elif opt in ("-m", "--monitor"):
             with open(f"{args[3]}.json", 'w') as fp:
