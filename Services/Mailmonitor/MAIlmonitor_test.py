@@ -2,6 +2,7 @@
 this module tests over mailmonitor utils
 """
 import sys, getopt
+import json
 import threading
 from tqdm import tqdm
 from Services.Mailmonitor.IMAP import IMAPclient
@@ -22,20 +23,20 @@ def test_receive(user, passw, criteria):
 
 
 def monitor_service(number_of_messages, sender, receiver, receiverpass, criteria="LAST"):
-    print(f"{number_of_messages} {sender} {receiver} {receiverpass}")
-    times_smtp = {}
-    times_imap = {}
+    print(f"Generating  {number_of_messages} samples.")
+    times_smtp = []
+    times_imap = []
     smtp_server = SMTPclient("localhost")
     imap_server = IMAPclient("localhost")
     imap_server.login(receiver, receiverpass)
     message_available = threading.Event()
     for i in tqdm(range(number_of_messages)):
-        times_smtp[i] = smtp_server.sendmail(sender, receiver, "test", message_available, verbose=False)
+        times_smtp.append(smtp_server.sendmail(sender, receiver, "test", message_available, verbose=False))
         message_available.wait()
-        times_imap[i] = imap_server.fetch_mail(criteria, delete=True)
+        times_imap.append(imap_server.fetch_mail(criteria, delete=True))
     smtp_server.close()
     imap_server.close()
-    return times_smtp, times_imap
+    return {"smtp_times": times_smtp, "imap_times": times_imap}
 
 
 def main(argv):
@@ -53,12 +54,13 @@ def main(argv):
             print('usage MAILmonitor_test.py -s <sender> <receiver> <message>')
             print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <host>')
             sys.exit()
-        elif opt in ("-s", "--ifile"):
+        elif opt in ("-s", "--send"):
             test_send(args[0], args[1], args[2])
-        elif opt in ("-r", "--ofile"):
+        elif opt in ("-r", "--receive"):
             test_receive(args[0], args[1], "ALL" if len(args) == 2 else args[2])
-        elif opt in ("-m", "--ofile"):
-            print("times:\n",monitor_service(int(arg), args[0], args[1], args[2]))
+        elif opt in ("-m", "--monitor"):
+            with open('mydict.json', 'wb') as fp:
+                json.dump(monitor_service(int(arg), args[0], args[1], args[2]), fp)
 
 
 if __name__ == '__main__':
