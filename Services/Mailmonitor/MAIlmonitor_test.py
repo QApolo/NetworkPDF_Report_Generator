@@ -1,5 +1,27 @@
+# -*- coding: utf-8 -*-
 """
-this module tests over mailmonitor utils
+This module tests over mailmonitor utils
+Changelog:
+--Version 4 CrisCastro
+    ---implemented plot functionality
+--Version 3 CrisCastro
+    ---generate N mail samples and monitoring their delivery times
+--Version 2 CrisCastro
+    ---receive mail test
+--Version 1 CrisCastro
+    ---send mail test
+
+USAGE:
+     MAILmonitor_test.py -option <args>*
+Check Mail:
+    MAILmonitor_test.py -r <user> <password> <criteria>
+Send Mail:
+    MAILmonitor_test.py -s <sender> <receiver> <message>
+Generate N number of samples and monitor their delivery times:
+    MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <logfile>
+Plot delivery times stored in a json file
+    MAILmonitor_test.py -p <datafile.json> <outputfile>
+Todo:
 """
 import getopt
 import json
@@ -57,7 +79,6 @@ def plot(stmptimes, imaptimes, name):
     plt.legend(loc='upper right')
     plt.savefig(f'{name}.png')
 
-
 def main(argv):
     inputfile = ''
     outputfile = ''
@@ -71,7 +92,7 @@ def main(argv):
             print('usage MAILmonitor_test.py -option <args>*')
             print('usage MAILmonitor_test.py -r <user> <password> <criteria>')
             print('usage MAILmonitor_test.py -s <sender> <receiver> <message>')
-            print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> ')
+            print('usage MAILmonitor_test.py -m <numberOftestEmails> <sender> <receiver> <receiverpass> <logfile> ')
             print('usage MAILmonitor_test.py -p <datafile.json> <outputfile>')
             sys.exit()
         elif opt in ("-s", "--send"):
@@ -84,7 +105,7 @@ def main(argv):
                 plot(dict["smtp_times"], dict["imap_times"], args[1])
                 print(f"Plot has been saved as {args[1]}.png")
         elif opt in ("-m", "--monitor"):
-            with open('mydict.json', 'w') as fp:
+            with open(args[3], 'w') as fp:
                 json.dump(monitor_service(int(arg), args[0], args[1], args[2]), fp)
 
 

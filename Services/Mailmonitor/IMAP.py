@@ -2,9 +2,11 @@
 """
 This describes an  IMAPClient
 Changelog:
+--Version 2 CrisCastro
+    ---implemented search criteria and email delete
 --Version 1 CrisCastro
     ---basic fetch email  method written
-Todo: delete the email once is  readed
+Todo:
 """
 import imaplib
 import time
